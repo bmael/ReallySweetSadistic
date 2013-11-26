@@ -1,0 +1,28 @@
+API
+===
+
+ - Authentication
+	(userName, password)
+ - Register
+	(userName, password)
+ 
+ - Subscribe
+	(userName, Flow)
+ - UnSubscribe
+	(userName, Flow)
+
+-------------------------------
+
+READER
+======
+
+ - GetFlows
+ - DisplayFlow
+
+
+-------------------------------
+
+[Flow]
+	address: 	String
+	title: 		String
+	content:	String
