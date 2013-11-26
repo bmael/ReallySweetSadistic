@@ -6,14 +6,22 @@ package fr.nantes.univ.alma.reallysweetsadistic.api.impl;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
 
 /**
  * @author Maël
  *
  */
+@Entity
 public class Flow implements IFlow {
 
+	@Id
+	@GeneratedValue
+	private int id;
 	private String address;
 	private String title;
 	private String content;
