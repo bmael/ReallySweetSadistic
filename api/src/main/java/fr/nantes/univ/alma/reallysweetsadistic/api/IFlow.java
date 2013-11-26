@@ -38,6 +38,6 @@ public interface IFlow {
 	/**
 	 * Set the content of this Flow.
 	 */
-	public void setContent();
+	public void setContent(String content);
 	
 }
