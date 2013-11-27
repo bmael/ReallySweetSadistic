@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.nantes.univ.alma.reallysweetsadistic.api.impl;
 
 import java.util.Calendar;
@@ -11,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
+import fr.nantes.univ.alma.reallysweetsadistic.api.dao.FlowDAO;
 
 /**
  * @author Maël
@@ -26,6 +24,10 @@ public class Flow implements IFlow {
 	private String title;
 	private String content;
 	private Date lastUpdate;
+	
+	public Flow() {
+		this(null,"","");
+	}
 
 	/**
 	 * Contruct a new instance of Flow.

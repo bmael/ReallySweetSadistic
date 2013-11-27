@@ -1,13 +1,13 @@
-/**
- * 
- */
-package fr.nantes.univ.alma.reallysweetsadistic.api.impl;
+package fr.nantes.univ.alma.reallysweetsadistic.api.dao;
 
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import fr.nantes.univ.alma.reallysweetsadistic.api.impl.Flow;
+
 
 /**
  * <p>

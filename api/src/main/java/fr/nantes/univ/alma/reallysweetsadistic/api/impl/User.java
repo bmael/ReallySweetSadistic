@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.nantes.univ.alma.reallysweetsadistic.api.impl;
 
 import javax.persistence.Entity;
@@ -20,7 +17,12 @@ public class User implements IUser {
 	@GeneratedValue
 	private int id;
 	private String userName;
+//	@
 	private String password;
+	
+	public User() {
+		this(null,null);
+	}
 	
 	/**
 	 * Construct a new User with given name and password.
