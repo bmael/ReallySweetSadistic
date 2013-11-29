@@ -22,20 +22,16 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
 public interface IReader {
 	
 	/**
-	 * Returns the user name
-	 * @return {@link String} - The user name
-	 */
-	public String getName();
-	
-	/**
 	 * Returns all the {@link IFlow flows} that user subscribed
 	 * @return {@link List}<{@link IFlow}> - The flows list
 	 */
 	public List<IFlow> getFlows();
 	
 	/**
-	 * Display a specific flow
-	 * @param flow {@link IFlow} - The flow to display
+	 * Return the flow with the url given in parameter.
+	 * @param url {@link String} - The flow url.
+	 * @return {@link IFlow} - The flow.
 	 */
-	public void displayFlow(IFlow flow);
+	public IFlow displayFlow(String url);
+
 }

@@ -3,12 +3,12 @@
  */
 package fr.nantes.univ.alma.reallysweetsadistic.services.impl;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
 import java.util.List;
 
 import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
 import fr.nantes.univ.alma.reallysweetsadistic.services.IReader;
+import fr.nantes.univ.alma.reallysweetsadistic.services.listener.FlowListenerThread;
 
 /**
  * <p>
@@ -23,61 +23,32 @@ import fr.nantes.univ.alma.reallysweetsadistic.services.IReader;
  *
  */
 public class Reader implements IReader {
-	private String userName;
-	private boolean logged=false;
+	private FlowListenerThread listener;
+	private List<String> urls;
+	private FlowManager flowManager;
 	
 	/**
 	 * Constructor for an user
 	 * @param userName {@link String} - The user name
 	 */
-	public Reader(String userName) {
-		this.userName = userName;
+	public Reader(FlowManager flowManager) {
+		this.urls = new LinkedList<String>();
+		this.listener = new FlowListenerThread(this);
+		this.flowManager = flowManager;
 	}
-
+	
 	@Override
-	public void displayFlow(IFlow flow) {
-		// TODO Display flow
+	public IFlow displayFlow(String url) {
+		for (IFlow flow: this.flowManager.getFlows()) {
+			if(flow.getAddress().equals(url)){
+				return flow;
+			}
+		}
+		return null;
 	};
 	
 	@Override
 	public List<IFlow> getFlows() {
-		// TODO Get all flows subscribed from API
-		return null;
-	}
-	
-	@Override
-	public String getName() {
-		return this.userName;
-	}
-	
-	/**
-	 * Send an authentication request to API for this user with
-	 * the given password
-	 * @param password {@link String} - The password to submit
-	 * @return {@link Boolean boolean} - <code>true</code> if the authentication
-	 * was correct, <code>false</code> otherwise
-	 */
-	private boolean auth(String password) {
-        if(password.isEmpty())
-        {
-        	System.err.println("[ERROR] Password can not be empty");
-            return false;
-        }
-        MessageDigest md;
-        try
-        {
-            md = MessageDigest.getInstance("MD5");
-        }
-        catch (NoSuchAlgorithmException ex)
-        {
-        	ex.printStackTrace();
-            return false;
-        }
-        md.update(password.getBytes(/*"UTF-8"*/));
-        byte[] md5 = md.digest();
-        String encryptPassword=new String(md5/*,"UTF-8"*/);
-        // TODO Get authentication from API
-//        auth(this.userName, encryptPassword);
-        return true;
+		return this.urls;
 	}
 }
