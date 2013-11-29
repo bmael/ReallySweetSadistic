@@ -25,13 +25,13 @@ import fr.nantes.univ.alma.reallysweetsadistic.services.listener.FlowListenerThr
 public class Reader implements IReader {
 	private FlowListenerThread listener;
 	private List<String> urls;
-	private FlowManager flowManager;
+	private IFlowManager flowManager;
 	
 	/**
 	 * Constructor for an user
 	 * @param userName {@link String} - The user name
 	 */
-	public Reader(FlowManager flowManager) {
+	public Reader(IFlowManager flowManager) {
 		this.urls = new LinkedList<String>();
 		this.listener = new FlowListenerThread(this);
 		this.flowManager = flowManager;
