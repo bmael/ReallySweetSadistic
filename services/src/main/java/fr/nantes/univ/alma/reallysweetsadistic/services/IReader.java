@@ -25,7 +25,7 @@ public interface IReader {
 	 * Returns all the {@link IFlow flows} that user subscribed
 	 * @return {@link List}<{@link IFlow}> - The flows list
 	 */
-	public List<IFlow> getFlows();
+	public List<String> getFlows();
 	
 	/**
 	 * Return the flow with the url given in parameter.

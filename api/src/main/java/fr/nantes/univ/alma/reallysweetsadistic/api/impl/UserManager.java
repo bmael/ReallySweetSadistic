@@ -13,7 +13,6 @@ import javax.persistence.NoResultException;
 import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUser;
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUserManager;
-import fr.nantes.univ.alma.reallysweetsadistic.api.dao.FlowDAO;
 import fr.nantes.univ.alma.reallysweetsadistic.api.dao.UserDAO;
 
 /**
@@ -65,7 +64,7 @@ public class UserManager implements IUserManager {
 		return false;
 	}
 	
-	private static String getMD5Encryption(String password) {
+	public static String getMD5Encryption(String password) {
         if(password.isEmpty())
         {
         	System.err.println("[ERROR] Password can not be empty");

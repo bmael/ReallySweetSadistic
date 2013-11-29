@@ -3,9 +3,6 @@
  */
 package fr.nantes.univ.alma.reallysweetsadistic.services.listener;
 
-import java.util.List;
-
-import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
 import fr.nantes.univ.alma.reallysweetsadistic.services.IReader;
 
 /**
@@ -14,11 +11,11 @@ import fr.nantes.univ.alma.reallysweetsadistic.services.IReader;
  */
 public class FlowListenerThread extends Thread {
 
-	private List<IFlow> flows;
+//	private List<IFlow> flows;
 	
 	public FlowListenerThread(IReader reader) {
 		super();
-		this.flows = reader.getFlows();
+//		this.flows = reader.getFlows();
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
+import fr.nantes.univ.alma.reallysweetsadistic.api.IFlowManager;
 import fr.nantes.univ.alma.reallysweetsadistic.services.IReader;
 import fr.nantes.univ.alma.reallysweetsadistic.services.listener.FlowListenerThread;
 
@@ -48,7 +49,7 @@ public class Reader implements IReader {
 	};
 	
 	@Override
-	public List<IFlow> getFlows() {
+	public List<String> getFlows() {
 		return this.urls;
 	}
 }
