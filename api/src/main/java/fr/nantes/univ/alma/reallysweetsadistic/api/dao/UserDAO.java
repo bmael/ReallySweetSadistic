@@ -21,21 +21,27 @@ public class UserDAO {
 	}
 
 	public void newUser(String userName, String password) {
-		this.em.getTransaction().begin();
 		IUser user = new User(userName, password);
+		this.addUser(user);
+	}
 
+	public void addUser(IUser user) {
+		this.em.getTransaction().begin();
+		System.out.println("[USER_DAO] Adding user: "+user.getUserName());
 		this.em.persist(user);
 		this.em.getTransaction().commit();
 	}
 
 	public void updateUser(IUser user) {
 		this.em.getTransaction().begin();
+		System.out.println("[USER_DAO] Modifying user: "+user.getUserName());
 		this.em.merge(user);
 		this.em.getTransaction().commit();
 	}
 	
 	public void remUser(IUser user) {
 		this.em.getTransaction().begin();
+		System.out.println("[USER_DAO] Deleting user: "+user.getUserName());
 		this.em.remove(user);
 		this.em.getTransaction().commit();
 	}
@@ -45,6 +51,13 @@ public class UserDAO {
 		IUser user = this.em.find(User.class, idUser);
 		this.em.getTransaction().commit();
 		return user;
+	}
+	
+	public void reset() {
+		this.em.getTransaction().begin();
+		this.em.createQuery(
+				"ALTER TABLE USER AUTO_INCREMENT = 1").executeUpdate();
+		this.em.getTransaction().commit();
 	}
 
 	@SuppressWarnings("unchecked")
