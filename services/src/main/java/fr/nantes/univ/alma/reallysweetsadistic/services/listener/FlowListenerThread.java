@@ -3,14 +3,22 @@
  */
 package fr.nantes.univ.alma.reallysweetsadistic.services.listener;
 
+import java.util.List;
+
+import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
+import fr.nantes.univ.alma.reallysweetsadistic.services.IReader;
+
 /**
  * @author Maël
  * 
  */
 public class FlowListenerThread extends Thread {
 
-	public FlowListenerThread() {
+	private List<IFlow> flows;
+	
+	public FlowListenerThread(IReader reader) {
 		super();
+		this.flows = reader.getFlows();
 	}
 
 	@Override
@@ -18,7 +26,7 @@ public class FlowListenerThread extends Thread {
 		int timeToWait = 10000;
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
-				// TODO: ACTION A FAIRE
+				// TODO: update the reader flows.
 				Thread.sleep(timeToWait);
 			}
 		} catch (InterruptedException e) {

@@ -13,8 +13,9 @@ public interface IUserManager {
 	 * User authentication with user name and password.
 	 * @param userName the user name of the user who wants to be authenticated.
 	 * @param password associated with the userName.
+	 * @return 
 	 */
-	public void authentication(String userName, String password);
+	public IUser authentication(String userName, String password);
 	
 	/**
 	 * Register a new user. Storing userName and associated password.
