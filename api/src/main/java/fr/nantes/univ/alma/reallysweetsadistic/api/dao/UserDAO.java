@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUser;
 import fr.nantes.univ.alma.reallysweetsadistic.api.impl.User;
 
 public class UserDAO {
-
 
 	private EntityManagerFactory emf;
 	private EntityManager em;
@@ -27,21 +29,21 @@ public class UserDAO {
 
 	public void addUser(IUser user) {
 		this.em.getTransaction().begin();
-		System.out.println("[USER_DAO] Adding user: "+user.getUserName());
+		System.out.println("[USER_DAO] Adding user: " + user.getUserName());
 		this.em.persist(user);
 		this.em.getTransaction().commit();
 	}
 
 	public void updateUser(IUser user) {
 		this.em.getTransaction().begin();
-		System.out.println("[USER_DAO] Modifying user: "+user.getUserName());
+		System.out.println("[USER_DAO] Modifying user: " + user.getUserName());
 		this.em.merge(user);
 		this.em.getTransaction().commit();
 	}
-	
+
 	public void remUser(IUser user) {
 		this.em.getTransaction().begin();
-		System.out.println("[USER_DAO] Deleting user: "+user.getUserName());
+		System.out.println("[USER_DAO] Deleting user: " + user.getUserName());
 		this.em.remove(user);
 		this.em.getTransaction().commit();
 	}
@@ -52,11 +54,31 @@ public class UserDAO {
 		this.em.getTransaction().commit();
 		return user;
 	}
-	
+
+	public IUser getUser(String userName) throws NoResultException {
+		this.em.getTransaction().begin();
+		IUser user = null;
+		try {
+			user = (IUser) this.em.createQuery(
+					"select u from User u where u.userName='" + userName + "'")
+					.getSingleResult();
+		} catch (ClassCastException e) {
+			e.printStackTrace();
+			return null;
+		} catch (NonUniqueResultException e) {
+			System.err.println("[ERROR] There is many users with"
+					+ " the same name \"" + userName + "\"");
+			return null;
+		}
+		this.em.getTransaction().commit();
+		return user;
+	}
+
 	public void reset() {
 		this.em.getTransaction().begin();
-		this.em.createQuery(
-				"ALTER TABLE USER AUTO_INCREMENT = 1").executeUpdate();
+		System.out.println("[USER_DAO] Reseting USER table");
+		Query query = this.em.createNativeQuery("TRUNCATE TABLE USER");
+		query.executeUpdate();
 		this.em.getTransaction().commit();
 	}
 

@@ -1,11 +1,13 @@
 package fr.nantes.univ.alma.reallysweetsadistic.api.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
 import fr.nantes.univ.alma.reallysweetsadistic.api.impl.Flow;
 
 
@@ -32,32 +34,34 @@ public class FlowDAO {
 	}
 
 	public void newFlow(String address, String title, String content) {
+		this.newFLow(new Flow(address, title, content));
+	}
+	
+	public void newFLow(IFlow flow) {
 		this.em.getTransaction().begin();
-		Flow Flow = new Flow(address, title, content);
-
-		this.em.persist(Flow);
+		this.em.persist(flow);
 		this.em.getTransaction().commit();
 	}
 
-	public Flow getFlow(int idFlow) {
+	public IFlow getFlow(int idFlow) {
 		this.em.getTransaction().begin();
-		Flow Flow = this.em.find(Flow.class, idFlow);
+		IFlow flow = this.em.find(Flow.class, idFlow);
 		this.em.getTransaction().commit();
-		return Flow;
+		return flow;
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Flow> getFlows() {
+	public List<IFlow> getFlows() {
 		this.em.getTransaction().begin();
-		ArrayList<Flow> list;
+		ArrayList<IFlow> list;
 		try {
-			list = (ArrayList<Flow>) this.em.createQuery(
+			list = (ArrayList<IFlow>) this.em.createQuery(
 					"select f from Flow f order by f.id asc").getResultList();
 		} catch (ClassCastException e) {
 			e.printStackTrace();
 			return null;
 		}
 		this.em.getTransaction().commit();
-		return list == null ? new ArrayList<Flow>() : list;
+		return list == null ? new ArrayList<IFlow>() : list;
 	}
 }

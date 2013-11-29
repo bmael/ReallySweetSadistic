@@ -36,7 +36,7 @@ public interface IFlow {
 	public Date getLastUpdate();
 	
 	/**
-	 * Set the content of this Flow.
+	 * Set the content of this Flow and update the last update date.
 	 */
 	public void setContent(String content);
 	

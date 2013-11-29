@@ -13,15 +13,17 @@ public interface IUserManager {
 	 * User authentication with user name and password.
 	 * @param userName the user name of the user who wants to be authenticated.
 	 * @param password associated with the userName.
+	 * @return 
 	 */
-	public void authentication(String userName, String password);
+	public IUser authentication(String userName, String password);
 	
 	/**
 	 * Register a new user. Storing userName and associated password.
 	 * @param userName of the new user.
 	 * @param password of the new user.
+	 * @return 
 	 */
-	public void register(String userName, String password);
+	public boolean register(String userName, String password);
 	
 	/**
 	 * A user subscribe to a Flow.

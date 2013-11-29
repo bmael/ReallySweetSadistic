@@ -8,6 +8,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUser;
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUserManager;
@@ -21,15 +23,34 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.dao.UserDAO;
 public class UserManager implements IUserManager {
 
 	@Override
-	public void authentication(String userName, String password) {
-		// TODO Auto-generated method stub
-
+	public IUser authentication(String userName, String password) {
+		UserDAO userDao=new UserDAO();
+		IUser user;
+		try {
+			user=userDao.getUser(userName);
+		} catch (NoResultException e) {
+			System.err.println("[ERROR] User named \""+userName+"\" not found");
+			return null;
+		}
+		System.out.println(password+" ?= "+user.getPassword());
+		if(password.equals(user.getPassword())) {
+			return user;
+		}
+		System.err.println("[ERROR] Authentication failed for \""+userName+"\"");
+		return null;
 	}
 
 	@Override
-	public void register(String userName, String password) {
-		// TODO Auto-generated method stub
-
+	public boolean register(String userName, String password) {
+		UserDAO userDao=new UserDAO();
+		for(IUser user:userDao.getUsers()) {
+			if(user.getUserName().equalsIgnoreCase(userName)) {
+				System.err.println("[UserManager] The user name \""+userName+"\" already exists");
+				return false;
+			}
+		}
+		userDao.newUser(userName, password);
+		return true;
 	}
 
 	@Override
@@ -62,9 +83,9 @@ public class UserManager implements IUserManager {
         }
         String encryptPassword=null;
         try {
-			md.update(password.getBytes("UTF-8"));
+			md.update(password.getBytes("ASCII"));
 	        byte[] md5 = md.digest();
-	        encryptPassword=new String(md5,"UTF-8");
+	        encryptPassword=new String(md5,"ASCII");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,7 +99,7 @@ public class UserManager implements IUserManager {
 	
 
 	public static void main(String[] args) {
-		FlowDAO flowDAO=new FlowDAO();
+//		FlowDAO flowDAO=new FlowDAO();
 //		flowDAO.newFlow("address1", "title 1", "content 1");
 //		flowDAO.newFlow("address1", "title 2", "content 2");
 //		flowDAO.newFlow("address1", "title 3", "content 3");
@@ -93,14 +114,14 @@ public class UserManager implements IUserManager {
 //			userDAO.remUser(user);
 		}
 		
-//		if(true) return;
+		UserManager um=new UserManager();
+		IUser me = um.authentication("Mamelon", UserManager.getMD5Encryption("password"));
+		if(me!=null) {
+			System.out.println("Im logged as: "+me.getUserName());
+		}
 		
-		IUser moi=userDAO.getUser(1);
-		System.out.println("Moi je suis: "+moi.getUserName());
-//
-        IUser lui=userDAO.getUser(3);
-        System.out.println(moi.getPassword()+" ?= "+lui.getPassword());
-        System.out.println(moi.getPassword().equals(lui.getPassword()));
+//		userDAO.reset();
+		
 	}
 
 }
