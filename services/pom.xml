@@ -10,7 +10,6 @@
 	</parent>
 
 	<artifactId>ReallySweetSadistic-services</artifactId>
-	<packaging>jar</packaging>
 
 	<name>ReallySweetSadistic :: Services</name>
 

@@ -6,8 +6,8 @@
 		<artifactId>ReallySweetSadistic-parent</artifactId>
 		<version>0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>client</artifactId>
-	<name>ReallySweetSadistic-client</name>
+	<artifactId>ReallySweetSadistic-client</artifactId>
+	<name>ReallySweetSadistic :: Client</name>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -27,4 +27,5 @@
 			<version>4.3</version>
 		</dependency>
 	</dependencies>
+	<packaging>pom</packaging>
 </project>

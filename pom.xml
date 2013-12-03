@@ -19,7 +19,6 @@
 	<modules>
 		<module>api</module>
 		<module>services</module>
-		<module>Client</module>
 		<module>client</module>
 	</modules>
 
