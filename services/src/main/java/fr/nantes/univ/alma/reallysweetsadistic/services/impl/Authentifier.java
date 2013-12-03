@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUser;
-import fr.nantes.univ.alma.reallysweetsadistic.api.IUserManager;
 import fr.nantes.univ.alma.reallysweetsadistic.api.impl.UserManager;
 
 /**
@@ -26,17 +25,17 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.impl.UserManager;
 @RequestMapping("authentifier")
 public class Authentifier {
 	private List<IUser> connected;
-	@Context
-	private IUserManager userManager;
+//	@Context
+//	private UserManager userManager;
 	
 	public Authentifier() {
 		this.connected = new LinkedList<IUser>();
 	}
 
-	public Authentifier(@Context IUserManager manager) {
-		this.connected = new LinkedList<IUser>();
-		this.userManager = manager;
-	}
+//	public Authentifier(@Context IUserManager manager) {
+//		this.connected = new LinkedList<IUser>();
+//		this.userManager = manager;
+//	}
 
 	/**
 	 * Send an authentication request to API for this user with the given
@@ -51,7 +50,7 @@ public class Authentifier {
     @ResponseBody
 	public boolean auth(@RequestParam(value = "userName") String userName, @RequestParam(value = "password") String password) {
     	System.out.println("HAVE to login: " + userName);
-		IUser user = this.userManager.authentication(userName,
+		IUser user = UserManager.getInstance().authentication(userName,
 				UserManager.getMD5Encryption(password));
 		this.connected.add(user);
 
