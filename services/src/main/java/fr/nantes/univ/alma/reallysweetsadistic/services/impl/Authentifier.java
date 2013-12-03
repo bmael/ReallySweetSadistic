@@ -6,6 +6,12 @@ package fr.nantes.univ.alma.reallysweetsadistic.services.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUser;
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUserManager;
 import fr.nantes.univ.alma.reallysweetsadistic.api.impl.UserManager;
@@ -14,6 +20,8 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.impl.UserManager;
  * @author Maël
  * 
  */
+@Controller
+@RequestMapping("authentifier")
 public class Authentifier {
 	private List<IUser> connected;
 	private IUserManager userManager;
@@ -32,7 +40,9 @@ public class Authentifier {
 	 * @return {@link Boolean boolean} - <code>true</code> if the authentication
 	 *         was correct, <code>false</code> otherwise
 	 */
-	public boolean auth(String userName, String password) {
+    @RequestMapping(value="authentication", method = RequestMethod.POST)
+    @ResponseBody
+	public boolean auth(@RequestParam(value = "userName") String userName, @RequestParam(value = "password") String password) {
 
 		IUser user = this.userManager.authentication(userName,
 				UserManager.getMD5Encryption(password));
@@ -46,7 +56,9 @@ public class Authentifier {
 	 * @param userName
 	 * @return
 	 */
-	public boolean disconnect(String userName) {
+    @RequestMapping(value="disconnection", method = RequestMethod.POST)
+    @ResponseBody
+	public boolean disconnect(@RequestParam(value = "userName") String userName) {
 		for (int i = this.connected.size(); i > 0; i--) {
 			if (this.connected.get(i).getUserName() == userName) {
 				return this.connected.remove(this.connected.get(i));
