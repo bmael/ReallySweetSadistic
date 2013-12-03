@@ -45,5 +45,6 @@
 	<profiles>
 	</profiles>
 
+	<packaging>war</packaging>
 </project>
 
