@@ -21,6 +21,16 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.dao.UserDAO;
  */
 public class UserManager implements IUserManager {
 
+	private UserManager(){}
+	
+	private static class UserManagerHolder{
+		private final static UserManager instance = new UserManager();
+	}
+	
+	public static UserManager getInstance(){
+		return UserManagerHolder.instance;
+	}
+	
 	@Override
 	public IUser authentication(String userName, String password) {
 		UserDAO userDao=new UserDAO();
@@ -113,8 +123,8 @@ public class UserManager implements IUserManager {
 //			userDAO.remUser(user);
 		}
 		
-		UserManager um=new UserManager();
-		IUser me = um.authentication("Mamelon", UserManager.getMD5Encryption("password"));
+		
+		IUser me = UserManager.getInstance().authentication("Mamelon", UserManager.getMD5Encryption("password"));
 		if(me!=null) {
 			System.out.println("Im logged as: "+me.getUserName());
 		}

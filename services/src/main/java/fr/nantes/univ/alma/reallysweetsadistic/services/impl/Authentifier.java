@@ -26,6 +26,7 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.impl.UserManager;
 @RequestMapping("authentifier")
 public class Authentifier {
 	private List<IUser> connected;
+	@Context
 	private IUserManager userManager;
 	
 	public Authentifier() {
