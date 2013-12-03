@@ -85,7 +85,7 @@ public class Client {
 		Client client = new Client();
 		
 		// Authentication request
-		HttpPost authentication = new HttpPost("http://localhost:8080/reader-services-0.1-SNAPSHOT/service/authentifier/authentication");
+		HttpPost authentication = new HttpPost("http://localhost:8080/ReallySweetSadistic-services-0.1-SNAPSHOT/service/authentifier/authentication");
 		
 		List<NameValuePair> params = client.authenticationInfo();
 		
@@ -99,7 +99,7 @@ public class Client {
         params.clear();
         
         // Authentication request
- 		HttpPost disconnection = new HttpPost("http://localhost:8080/reader-services-0.1-SNAPSHOT/service/authentifier/disconnection");
+ 		HttpPost disconnection = new HttpPost("http://localhost:8080/ReallySweetSadistic-services-0.1-SNAPSHOT/service/authentifier/disconnection");
  		params.add(new BasicNameValuePair("userName", client.userName));
  		
  		encodedFormEntity = new UrlEncodedFormEntity(params, "UTF-8");
