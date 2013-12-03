@@ -30,7 +30,7 @@ public class Authentifier {
 	private IUserManager userManager;
 	
 	public Authentifier() {
-		this.connected = new LinkedList<IUser>();
+		this(UserManager.getInstance());
 	}
 
 	public Authentifier(@Context IUserManager manager) {
@@ -51,6 +51,7 @@ public class Authentifier {
     @ResponseBody
 	public boolean auth(@RequestParam(value = "userName") String userName, @RequestParam(value = "password") String password) {
     	System.out.println("HAVE to login: " + userName);
+    	System.out.println(this.userManager.toString());
 		IUser user = this.userManager.authentication(userName,
 				UserManager.getMD5Encryption(password));
 		this.connected.add(user);
