@@ -38,5 +38,7 @@
         </property>
     </bean>
 
-
+	<bean id="userManager"
+		class="fr.nantes.univ.alma.reallysweetsadistic.api.impl.UserManager">
+	</bean>
 </beans>
