@@ -6,6 +6,8 @@ package fr.nantes.univ.alma.reallysweetsadistic.services.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.ws.rs.core.Context;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +32,7 @@ public class Authentifier {
 		this.connected = new LinkedList<IUser>();
 	}
 
-	public Authentifier(IUserManager manager) {
+	public Authentifier(@Context IUserManager manager) {
 		this.connected = new LinkedList<IUser>();
 		this.userManager = manager;
 	}
@@ -47,7 +49,7 @@ public class Authentifier {
     @RequestMapping(value="authentication", method = RequestMethod.POST)
     @ResponseBody
 	public boolean auth(@RequestParam(value = "userName") String userName, @RequestParam(value = "password") String password) {
-
+    	System.out.println("HAVE to login: " + userName);
 		IUser user = this.userManager.authentication(userName,
 				UserManager.getMD5Encryption(password));
 		this.connected.add(user);

@@ -1,7 +1,10 @@
 package main;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-
-import main.SpringUtilities;
+import javax.swing.plaf.basic.BasicViewportUI;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -75,12 +77,21 @@ public class Client {
 			throws IOException {
 
 		StringWriter writer = new StringWriter();
+		PrintWriter writerLog = new PrintWriter("log.html", "UTF-8");
+		
 		InputStream inputStream = response.getEntity().getContent();
 		try {
-			IOUtils.copy(inputStream, writer, "UTF-8");
+			//IOUtils.copy(inputStream, writer, "UTF-8");
+			IOUtils.copy(inputStream, writerLog, "UTF-8");
 		} finally {
 			inputStream.close();
 		}
+		
+
+
+		writer.close();
+		writerLog.close();
+		
 		return writer.toString();
 	}
 
@@ -92,22 +103,29 @@ public class Client {
 		// Authentication request
 		HttpPost authentication = new HttpPost(
 				"http://localhost:8080/ReallySweetSadistic-services-0.1-SNAPSHOT/service/authentifier/authentication");
-
+		authentication.setHeader("accept", "application/json");
 		List<NameValuePair> params = client.authenticationInfo();
-
+//		List<NameValuePair> params = new ArrayList<NameValuePair>();
+//		params.add(new BasicNameValuePair("userName", "plop"));
+		
+		System.out.println(params.toString());
 		UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(
 				params, "UTF-8");
 		authentication.setEntity(encodedFormEntity);
 		CloseableHttpResponse response = httpClient.execute(authentication);
 
-		System.out.println(response);
+		//System.out.println(response);
 		System.out.println(getContextAsString(response));
 
+		Desktop.getDesktop().open(new File("log.html"));
+		
 		params.clear();
 
 		// Authentication request
 		HttpPost disconnection = new HttpPost(
 				"http://localhost:8080/ReallySweetSadistic-services-0.1-SNAPSHOT/service/authentifier/disconnection");
+		disconnection.setHeader("accept", "application/json");
+		
 		params.add(new BasicNameValuePair("userName", client.userName));
 
 		encodedFormEntity = new UrlEncodedFormEntity(params, "UTF-8");
