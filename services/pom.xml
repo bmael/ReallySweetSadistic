@@ -10,6 +10,7 @@
 	</parent>
 
 	<artifactId>ReallySweetSadistic-services</artifactId>
+	<packaging>war</packaging>
 
 	<name>ReallySweetSadistic :: Services</name>
 
@@ -35,6 +36,36 @@
 			<artifactId>httpcore</artifactId>
 			<version>4.3</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.2.5.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>3.2.5.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>3.2.5.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>rome</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.11</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -44,7 +75,5 @@
 
 	<profiles>
 	</profiles>
-
-	<packaging>war</packaging>
 </project>
 
