@@ -25,6 +25,10 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.impl.UserManager;
 public class Authentifier {
 	private List<IUser> connected;
 	private IUserManager userManager;
+	
+	public Authentifier() {
+		this.connected = new LinkedList<IUser>();
+	}
 
 	public Authentifier(IUserManager manager) {
 		this.connected = new LinkedList<IUser>();
