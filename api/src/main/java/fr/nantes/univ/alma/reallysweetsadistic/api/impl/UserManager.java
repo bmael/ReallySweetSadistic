@@ -8,7 +8,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
 
 import fr.nantes.univ.alma.reallysweetsadistic.api.IFlow;
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUser;
@@ -21,19 +24,24 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.dao.UserDAO;
  */
 public class UserManager implements IUserManager {
 
-	private UserManager(){}
+	private static UserManager instance;
+	@PersistenceUnit(unitName="RSS")
+	private EntityManagerFactory emf;
 	
-	private static class UserManagerHolder{
-		private final static UserManager instance = new UserManager();
+	private UserManager(){
+//		this.emf=Persistence.createEntityManagerFactory("RSS");
 	}
 	
-	public static UserManager getInstance(){
-		return UserManagerHolder.instance;
+	public static UserManager getInstance() {
+		if(UserManager.instance==null) {
+			UserManager.instance = new UserManager();
+		}
+		return UserManager.instance;
 	}
 	
 	@Override
 	public IUser authentication(String userName, String password) {
-		UserDAO userDao=new UserDAO();
+		UserDAO userDao=new UserDAO(this.emf);
 		IUser user;
 		try {
 			user=userDao.getUser(userName);
@@ -51,7 +59,7 @@ public class UserManager implements IUserManager {
 
 	@Override
 	public boolean register(String userName, String password) {
-		UserDAO userDao=new UserDAO();
+		UserDAO userDao=new UserDAO(this.emf);
 		for(IUser user:userDao.getUsers()) {
 			if(user.getUserName().equalsIgnoreCase(userName)) {
 				System.err.println("[UserManager] The user name \""+userName+"\" already exists");
@@ -112,7 +120,7 @@ public class UserManager implements IUserManager {
 //		flowDAO.newFlow("address1", "title 1", "content 1");
 //		flowDAO.newFlow("address1", "title 2", "content 2");
 //		flowDAO.newFlow("address1", "title 3", "content 3");
-		UserDAO userDAO = new UserDAO();
+		UserDAO userDAO = new UserDAO(UserManager.getInstance().emf);
 //		userDAO.newUser("Nemolovich", UserManager.getMD5Encryption("motdepasse"));
 //		userDAO.newUser("Mamelon", UserManager.getMD5Encryption("password"));
 //		userDAO.newUser("Niiner", UserManager.getMD5Encryption("motdepasse"));

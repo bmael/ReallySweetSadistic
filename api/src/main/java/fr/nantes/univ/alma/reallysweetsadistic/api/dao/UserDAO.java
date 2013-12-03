@@ -6,20 +6,26 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import fr.nantes.univ.alma.reallysweetsadistic.api.IUser;
 import fr.nantes.univ.alma.reallysweetsadistic.api.impl.User;
 
 public class UserDAO {
-
+	
 	private EntityManagerFactory emf;
 	private EntityManager em;
+	
+	public UserDAO(EntityManagerFactory emf) {
+		this.emf = emf;
+		this.em=this.emf.createEntityManager();
+	}
 
-	public UserDAO() {
-		this.emf = Persistence.createEntityManagerFactory("RSS");
-		this.em = this.emf.createEntityManager();
+//	public UserDAO() {
+//	}
+	
+	public void setEmf(EntityManagerFactory emf) {
+		this.emf = emf;
 	}
 
 	public void newUser(String userName, String password) {
