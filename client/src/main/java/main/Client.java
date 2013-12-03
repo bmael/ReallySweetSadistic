@@ -53,11 +53,15 @@ public class Client {
 				6, 6, // initX, initY
 				6, 6); // xPad, yPad
 
-		int option = JOptionPane
-				.showOptionDialog(null, panel, "User information",
-						JOptionPane.PLAIN_MESSAGE,
-						JOptionPane.OK_CANCEL_OPTION, null, null,
-						JOptionPane.OK_OPTION);
+		int option = -1;
+		do {
+			option = JOptionPane.showOptionDialog(null, panel,
+					"User information", JOptionPane.PLAIN_MESSAGE,
+					JOptionPane.OK_CANCEL_OPTION, null, null,
+					JOptionPane.OK_OPTION);
+		} while (option == JOptionPane.OK_OPTION
+				&& (userName.getText().isEmpty() || new String(
+						password.getPassword()).isEmpty()));
 		if (option == JOptionPane.OK_OPTION && !userName.getText().isEmpty()
 				&& !new String(password.getPassword()).isEmpty()) {
 			this.userName = userName.getText();
@@ -118,7 +122,7 @@ public class Client {
 		
 
 //		UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(
-//				params, "UTF-8");
+//				params, "ASCII");
 //		authentication.setEntity(encodedFormEntity);
 		System.out.println(authentication.toString());
 		CloseableHttpResponse response = httpClient.execute(authentication);
