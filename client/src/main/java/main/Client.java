@@ -25,8 +25,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
 public class Client {
-	
-	private static List<NameValuePair> initUserPanel(){
+	private String userName;
+		
+	private List<NameValuePair> authenticationInfo(){
 		List<NameValuePair> params = null;
 		
 		JPanel panel = new JPanel(new SpringLayout());
@@ -52,6 +53,8 @@ public class Client {
 		int option = JOptionPane.showOptionDialog(null, panel, "User information", JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, null, JOptionPane.OK_OPTION);
 		if(option == JOptionPane.OK_OPTION && !userName.getText().isEmpty() && !new String(password.getPassword()).isEmpty())
 		{
+			this.userName = userName.getText();
+			
 	        params = new ArrayList<NameValuePair>();
 	        params.add(new BasicNameValuePair("userName", userName.getText()));
 			params.add(new BasicNameValuePair("password", new String(password.getPassword())));
@@ -61,6 +64,7 @@ public class Client {
 		
 		return params;
 	}
+	
 
 	protected static String getContextAsString(HttpResponse response) throws IOException {
 
@@ -77,10 +81,12 @@ public class Client {
 	public static void main(String[] args) throws Exception {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
+		Client client = new Client();
+		
 		// Authentication request
 		HttpPost authentication = new HttpPost("http://localhost:8080/reader-services-0.1-SNAPSHOT/service/authentifier/authentication");
 		
-		List<NameValuePair> params = initUserPanel();
+		List<NameValuePair> params = client.authenticationInfo();
 		
 		UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(params, "UTF-8");
 		authentication.setEntity(encodedFormEntity);
@@ -88,6 +94,22 @@ public class Client {
 
         System.out.println(response);
         System.out.println(getContextAsString(response));
+        
+        params.clear();
+        
+        // Authentication request
+ 		HttpPost disconnection = new HttpPost("http://localhost:8080/reader-services-0.1-SNAPSHOT/service/authentifier/disconnection");
+ 		params.add(new BasicNameValuePair("userName", client.userName));
+ 		
+ 		encodedFormEntity = new UrlEncodedFormEntity(params, "UTF-8");
+		authentication.setEntity(encodedFormEntity);
+        response = httpClient.execute(disconnection);
+
+        System.out.println(response);
+        System.out.println(getContextAsString(response));
+        
+        params.clear();
+        
 	}
 
 }
