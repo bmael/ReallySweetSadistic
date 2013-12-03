@@ -74,6 +74,18 @@
 	</build>
 
 	<profiles>
+		<profile>
+			<id>RSS</id>
+			<properties>
+				<jdbc.url>jdbc:mysql://localhost:3306/RSS</jdbc.url>
+				<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+				<jdbc.username>root</jdbc.username>
+				<jdbc.password></jdbc.password>
+				<jdbc.format_sql>true</jdbc.format_sql>
+				<jdbc.show_sql>true</jdbc.show_sql>
+				<jdbc.hbm2ddl.auto>update</jdbc.hbm2ddl.auto>
+			</properties>
+		</profile>
 	</profiles>
 </project>
 

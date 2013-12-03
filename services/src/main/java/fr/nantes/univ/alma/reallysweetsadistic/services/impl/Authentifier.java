@@ -3,6 +3,7 @@
  */
 package fr.nantes.univ.alma.reallysweetsadistic.services.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,17 +26,17 @@ import fr.nantes.univ.alma.reallysweetsadistic.api.impl.UserManager;
 @RequestMapping("authentifier")
 public class Authentifier {
 	private List<IUser> connected;
-//	@Context
-//	private UserManager userManager;
-	
+	//	@Context
+	//	private UserManager userManager;
+
 	public Authentifier() {
-		this.connected = new LinkedList<IUser>();
+		this.connected = new ArrayList<IUser>();
 	}
 
-//	public Authentifier(@Context IUserManager manager) {
-//		this.connected = new LinkedList<IUser>();
-//		this.userManager = manager;
-//	}
+	//	public Authentifier(@Context IUserManager manager) {
+	//		this.connected = new LinkedList<IUser>();
+	//		this.userManager = manager;
+	//	}
 
 	/**
 	 * Send an authentication request to API for this user with the given
@@ -46,12 +47,13 @@ public class Authentifier {
 	 * @return {@link Boolean boolean} - <code>true</code> if the authentication
 	 *         was correct, <code>false</code> otherwise
 	 */
-    @RequestMapping(value="authentication", method = RequestMethod.GET)
-    @ResponseBody
+	@RequestMapping(value="authentication", method = RequestMethod.GET)
+	@ResponseBody
 	public boolean auth(@RequestParam(value = "userName") String userName, @RequestParam(value = "password") String password) {
-    	System.out.println("HAVE to login: " + userName);
+		System.out.println("HAVE to login: " + userName);
+
 		IUser user = UserManager.getInstance().authentication(userName,
-				UserManager.getMD5Encryption(password));
+		UserManager.getMD5Encryption(password));
 		this.connected.add(user);
 
 		return true;
@@ -62,8 +64,8 @@ public class Authentifier {
 	 * @param userName
 	 * @return
 	 */
-    @RequestMapping(value="disconnection", method = RequestMethod.POST)
-    @ResponseBody
+	@RequestMapping(value="disconnection", method = RequestMethod.POST)
+	@ResponseBody
 	public boolean disconnect(@RequestParam(value = "userName") String userName) {
 		for (int i = this.connected.size(); i > 0; i--) {
 			if (this.connected.get(i).getUserName() == userName) {
