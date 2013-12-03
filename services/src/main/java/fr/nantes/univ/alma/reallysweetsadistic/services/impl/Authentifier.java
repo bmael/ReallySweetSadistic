@@ -46,7 +46,7 @@ public class Authentifier {
 	 * @return {@link Boolean boolean} - <code>true</code> if the authentication
 	 *         was correct, <code>false</code> otherwise
 	 */
-    @RequestMapping(value="authentication", method = RequestMethod.POST)
+    @RequestMapping(value="authentication", method = RequestMethod.GET)
     @ResponseBody
 	public boolean auth(@RequestParam(value = "userName") String userName, @RequestParam(value = "password") String password) {
     	System.out.println("HAVE to login: " + userName);
